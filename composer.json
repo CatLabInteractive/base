@@ -9,5 +9,10 @@
             "email": "thijs@catlab.be"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4" : {
+            "CatLab\\Base\\" : "src/CatLab/Base"
+        }
+    }
 }
