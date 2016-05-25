@@ -44,4 +44,16 @@ class LimitParameter implements \CatLab\Base\Interfaces\Database\LimitParameter
     {
         return $this->offset;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        if ($this->offset) {
+            return $this->offset . ', ' . $this->amount;
+        } else {
+            return $this->amount;
+        }
+    }
 }

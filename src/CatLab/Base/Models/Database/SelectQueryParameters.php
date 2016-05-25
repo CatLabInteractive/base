@@ -3,6 +3,7 @@
 namespace CatLab\Base\Models\Database;
 
 use CatLab\Base\Interfaces\Database\SelectQueryParameters as SelectQueryParametersInterface;
+use PDO;
 
 /**
  * Class QueryParameters
@@ -107,5 +108,42 @@ class SelectQueryParameters implements SelectQueryParametersInterface
     public function isReverse()
     {
         return $this->reverse;
+    }
+
+    /**
+     * @param PDO $pdo
+     * @param $table
+     * @param array $columns
+     * @return string
+     */
+    public function toQuery(PDO $pdo, $table, $columns = [])
+    {
+        if (count($columns) === 0) {
+            $columns = [ '*' ];
+        }
+
+        $query = "SELECT " . implode($columns, ',') . " FROM " . $table;
+
+        $where = '';
+        foreach ($this->getWhere() as $v) {
+            $where .= $v->toQuery($pdo) . ' AND ';
+        }
+        if (mb_strlen($where) > 0) {
+            $where = mb_substr($where, 0, -5);
+            $query .= $where;
+        }
+
+        if (count($this->getSort()) > 0) {
+            $query .= ' ORDER BY ';
+            foreach ($this->getSort() as $v) {
+                $query .= $v->__toString();
+            }
+        }
+
+        if ($this->getLimit()) {
+            $query .= ' LIMIT ' . $this->getLimit()->getAmount();
+        }
+
+        return $query;
     }
 }

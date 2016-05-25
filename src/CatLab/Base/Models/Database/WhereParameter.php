@@ -7,6 +7,7 @@ use CatLab\Base\Models\Grammar\AndConjunction;
 use CatLab\Base\Models\Grammar\Comparison;
 use CatLab\Base\Models\Grammar\Conjunction;
 use CatLab\Base\Models\Grammar\OrConjunction;
+use PDO;
 
 /**
  * Class WhereParameter
@@ -20,7 +21,7 @@ class WhereParameter implements WhereParameterInterface
     private $condition;
 
     /**
-     * @var Conjunction
+     * @var Conjunction[]
      */
     private $compositions;
 
@@ -77,6 +78,24 @@ class WhereParameter implements WhereParameterInterface
         return $this->condition;
     }
 
+    /**
+     * @param PDO $pdo
+     * @return string
+     */
+    public function toQuery(PDO $pdo)
+    {
+        if ($this->condition) {
+            $out = $this->condition->toQuery($pdo);
+        } else {
+            $out = 'TRUE';
+        }
+
+        foreach ($this->compositions as $v) {
+            $out .= $v->toQuery($pdo);
+        }
+
+        return $out;
+    }
 
     /**
      * @return string

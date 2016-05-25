@@ -59,4 +59,12 @@ class OrderParameter implements \CatLab\Base\Interfaces\Database\OrderParameter
             return self::ASC;
         }
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getColumn() . ' ' . $this->getDirection();
+    }
 }

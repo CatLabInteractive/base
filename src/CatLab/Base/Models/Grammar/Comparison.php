@@ -4,6 +4,7 @@ namespace CatLab\Base\Models\Grammar;
 
 use CatLab\Base\Interfaces\Grammar\Comparison as ComparisonInterface;
 use CatLab\Base\Interfaces\Grammar\Condition;
+use PDO;
 
 /**
  * Class Comparison
@@ -61,6 +62,15 @@ class Comparison implements Condition, ComparisonInterface
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * @param PDO $pdo
+     * @return string
+     */
+    public function toQuery(PDO $pdo)
+    {
+        return $this->subject . ' ' . $this->operator . ' ' . $pdo->quote($this->getValue());
     }
 
     /**
