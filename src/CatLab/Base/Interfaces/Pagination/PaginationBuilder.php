@@ -2,7 +2,8 @@
 
 namespace CatLab\Base\Interfaces\Pagination;
 
-use CatLab\Base\Models\Database\QueryParameters;
+use CatLab\Base\Models\Database\OrderParameter;
+use CatLab\Base\Models\Database\SelectQueryParameters;
 
 /**
  * Class PaginationBuilder
@@ -11,16 +12,22 @@ use CatLab\Base\Models\Database\QueryParameters;
 interface PaginationBuilder
 {
     /**
+     * @param OrderParameter $order
      * @return $this
      */
-    public function clear();
+    public function orderBy(OrderParameter $order);
 
     /**
      * @param string $column
-     * @param string $direction
+     * @param string $publicName
      * @return $this
      */
-    public function sort(string $column, string $direction = 'asc');
+    public function registerPropertyName(string $column, string $publicName);
+
+    /**
+     * @return array
+     */
+    public function getSortOrder();
 
     /**
      * @param int $records
@@ -29,15 +36,31 @@ interface PaginationBuilder
     public function limit(int $records);
 
     /**
-     * @param QueryParameters $parameters
-     * @return QueryParameters
+     * @param SelectQueryParameters $parameters
+     * @return SelectQueryParameters
      */
-    public function build(QueryParameters $parameters = null);
+    public function build(SelectQueryParameters $parameters = null);
 
     /**
-     * To be called after the query has been handled.
-     * @param array $results
-     * @return mixed
+     * @param array $properties
+     * @return PaginationBuilder
      */
-    public function processResults(array $results);
+    public function setFirst(array $properties) : PaginationBuilder;
+
+    /**
+     * @param array $properties
+     * @return PaginationBuilder
+     */
+    public function setLast(array $properties) : PaginationBuilder;
+
+    /**
+     * @return PaginationCursor
+     */
+    public function getCursors() : PaginationCursor;
+
+    /**
+     * @param array $properties
+     * @return PaginationBuilder
+     */
+    public function setRequest(array $properties);
 }

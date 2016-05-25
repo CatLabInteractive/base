@@ -6,7 +6,7 @@ namespace CatLab\Base\Models\Database;
  * Class LimitParameter
  * @package CatLab\Base\Models\Database
  */
-class LimitParameter
+class LimitParameter implements \CatLab\Base\Interfaces\Database\LimitParameter
 {
     /**
      * @var int
