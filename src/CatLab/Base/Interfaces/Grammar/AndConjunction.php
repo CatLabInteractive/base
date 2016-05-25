@@ -6,7 +6,7 @@ namespace CatLab\Base\Interfaces\Grammar;
  * Class AndConjunction
  * @package CatLab\Base
  */
-interface AndConjunction
+interface AndConjunction extends Conjunction
 {
-    public function getSubject();
+
 }
