@@ -16,7 +16,7 @@ class AndConjunction extends Conjunction implements \CatLab\Base\Interfaces\Gram
      */
     public function toQuery(PDO $pdo)
     {
-        return ' OR (' . $this->condition->toQuery($pdo) . ')';
+        return ' AND (' . $this->condition->toQuery($pdo) . ')';
     }
 
     /**

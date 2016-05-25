@@ -130,7 +130,7 @@ class SelectQueryParameters implements SelectQueryParametersInterface
         }
         if (mb_strlen($where) > 0) {
             $where = mb_substr($where, 0, -5);
-            $query .= $where;
+            $query .= ' WHERE ' . $where;
         }
 
         if (count($this->getSort()) > 0) {
