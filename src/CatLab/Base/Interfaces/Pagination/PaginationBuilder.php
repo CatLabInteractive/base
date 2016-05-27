@@ -25,11 +25,6 @@ interface PaginationBuilder
     public function registerPropertyName(string $column, string $publicName);
 
     /**
-     * @return array
-     */
-    public function getSortOrder();
-
-    /**
      * @param int $records
      * @return $this
      */
@@ -63,4 +58,9 @@ interface PaginationBuilder
      * @return PaginationBuilder
      */
     public function setRequest(array $properties);
+
+    /**
+     * @return array
+     */
+    public function getOrderBy();
 }

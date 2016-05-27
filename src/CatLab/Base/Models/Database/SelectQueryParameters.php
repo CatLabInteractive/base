@@ -31,6 +31,9 @@ class SelectQueryParameters implements SelectQueryParametersInterface
      */
     private $reverse = false;
 
+    /**
+     * SelectQueryParameters constructor.
+     */
     public function __construct()
     {
         $this->where = array();
