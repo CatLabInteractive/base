@@ -63,11 +63,11 @@ interface PaginationBuilder
      * @param array $properties
      * @return PaginationBuilder
      */
-    public function setFirst(array $properties) : PaginationBuilder;
+    public function setFirst($properties) : PaginationBuilder;
 
     /**
      * @param array $properties
      * @return PaginationBuilder
      */
-    public function setLast(array $properties) : PaginationBuilder;
+    public function setLast($properties) : PaginationBuilder;
 }
