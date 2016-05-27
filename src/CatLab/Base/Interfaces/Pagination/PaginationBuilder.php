@@ -58,4 +58,16 @@ interface PaginationBuilder
      * @return mixed[]
      */
     public function processResults(SelectQueryParameters $parameters, $collection);
+
+    /**
+     * @param array $properties
+     * @return PaginationBuilder
+     */
+    public function setFirst(array $properties) : PaginationBuilder;
+
+    /**
+     * @param array $properties
+     * @return PaginationBuilder
+     */
+    public function setLast(array $properties) : PaginationBuilder;
 }
