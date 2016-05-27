@@ -1,18 +1,21 @@
 {
-    "name": "catlabinteractive/base",
-    "description": "A few classes that you always need.",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Thijs Van der Schaeghe",
-            "email": "info@catlab.be"
-        }
-    ],
-    "require": {},
-    "autoload": {
-        "psr-4" : {
-            "CatLab\\Base\\" : "src/CatLab/Base"
-        }
+  "name": "catlabinteractive/base",
+  "description": "A few classes that you always need.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Thijs Van der Schaeghe",
+      "email": "info@catlab.be"
     }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  },
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "CatLab\\Base\\": "src/CatLab/Base"
+    }
+  }
 }

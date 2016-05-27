@@ -74,12 +74,10 @@ class Collection
      */
     public function offsetSet($offset, $value)
     {
-        if (is_null ($offset))
-        {
-            $index = array_push ($this->data, $value) - 1;
-        }
-        else
-        {
+        if (is_null($offset)) {
+            $index = count($this);
+            $this->data[$index] = $value;
+        } else {
             $this->data[$offset] = $value;
         }
     }
