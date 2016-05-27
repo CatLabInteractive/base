@@ -37,21 +37,9 @@ interface PaginationBuilder
     public function build(SelectQueryParameters $parameters = null);
 
     /**
-     * @param array $properties
-     * @return PaginationBuilder
+     * @return Navigation
      */
-    public function setFirst(array $properties) : PaginationBuilder;
-
-    /**
-     * @param array $properties
-     * @return PaginationBuilder
-     */
-    public function setLast(array $properties) : PaginationBuilder;
-
-    /**
-     * @return PaginationCursor
-     */
-    public function getCursors() : PaginationCursor;
+    public function getNavigation() : Navigation;
 
     /**
      * @param array $properties
@@ -63,4 +51,11 @@ interface PaginationBuilder
      * @return array
      */
     public function getOrderBy();
+
+    /**
+     * @param SelectQueryParameters $parameters
+     * @param mixed[] $collection
+     * @return mixed[]
+     */
+    public function processResults(SelectQueryParameters $parameters, $collection);
 }
