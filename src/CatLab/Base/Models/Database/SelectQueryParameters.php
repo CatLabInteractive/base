@@ -136,8 +136,9 @@ class SelectQueryParameters implements SelectQueryParametersInterface
         if (count($this->getSort()) > 0) {
             $query .= ' ORDER BY ';
             foreach ($this->getSort() as $v) {
-                $query .= $v->__toString();
+                $query .= $v->__toString() . ', ';
             }
+            $query = mb_substr($query, 0, -2);
         }
 
         if ($this->getLimit()) {
