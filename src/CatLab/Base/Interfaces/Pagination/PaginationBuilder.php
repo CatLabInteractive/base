@@ -48,7 +48,7 @@ interface PaginationBuilder
     public function setRequest(array $properties);
 
     /**
-     * @return array
+     * @return OrderParameter[]
      */
     public function getOrderBy();
 
