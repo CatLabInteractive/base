@@ -14,4 +14,7 @@ class Operator
     const GTE = '>=';
     const EQ = '=';
     const NEQ = '!=';
+
+    // Fluffy operators
+    const SEARCH = 'SEARCH';
 }
