@@ -22,4 +22,10 @@ interface Comparison
      * @return string
      */
     public function getValue();
+
+    /**
+     * Return the entity class name if defined.
+     * @return mixed
+     */
+    public function getEntity();
 }

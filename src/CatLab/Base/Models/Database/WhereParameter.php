@@ -26,19 +26,25 @@ class WhereParameter implements WhereParameterInterface
     private $compositions;
 
     /**
+     * @var string
+     */
+    private $subject;
+
+    /**
      * WhereParameter constructor.
      * @param $column
      * @param $operator
      * @param $value
+     * @param $entity
      */
-    public function __construct($column = null, $operator = null, $value = null)
+    public function __construct($column = null, $operator = null, $value = null, $entity = null)
     {
         $this->compositions = [];
 
         if ($column instanceof WhereParameterInterface) {
             $this->and($column);
         } elseif (isset($column) || isset($operator)) {
-            $this->condition = new Comparison($column, $operator, $value);
+            $this->condition = new Comparison($column, $operator, $value, $entity);
         }
     }
 

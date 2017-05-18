@@ -28,16 +28,22 @@ class Comparison implements Condition, ComparisonInterface
     private $value;
 
     /**
+     * @var mixed
+     */
+    private $entity;
+
+    /**
      * WhereParameter constructor.
      * @param $column
      * @param $operator
      * @param $value
      */
-    public function __construct($column, $operator, $value)
+    public function __construct($column, $operator, $value, $entity = null)
     {
         $this->subject = $column;
         $this->operator = $operator;
         $this->value = $value;
+        $this->entity = $entity;
     }
 
     /**
@@ -65,12 +71,20 @@ class Comparison implements Condition, ComparisonInterface
     }
 
     /**
+     * @return mixed|null
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
+    /**
      * @param PDO $pdo
      * @return string
      */
     public function toQuery(PDO $pdo)
     {
-        return $this->subject . ' ' . $this->operator . ' ' . $pdo->quote($this->getValue());
+        return $this->subjectToQuery() . ' ' . $this->operator . ' ' . $pdo->quote($this->getValue());
     }
 
     /**
@@ -78,6 +92,20 @@ class Comparison implements Condition, ComparisonInterface
      */
     public function __toString()
     {
-        return $this->subject . ' ' . $this->operator . ' "' . escapeshellcmd($this->getValue()) . '"';
+        return $this->subjectToQuery() . ' ' . $this->operator . ' "' . escapeshellcmd($this->getValue()) . '"';
+    }
+
+    /**
+     * Helper method to turn comparison into nice looking sql query.
+     * @return string
+     */
+    protected function subjectToQuery()
+    {
+        $subject = '`' . $this->subject . '`';
+        if ($this->entity) {
+            $subject = '`' . $this->entity . '`.' . $this->subject;
+        }
+
+        return $subject;
     }
 }

@@ -22,14 +22,21 @@ class SortParameter
     private $direction;
 
     /**
+     * @var string
+     */
+    private $entity;
+
+    /**
      * SortParameter constructor.
      * @param string $column
      * @param string $direction
+     * @param null $entity
      */
-    public function __construct($column, $direction)
+    public function __construct($column, $direction, $entity = null)
     {
         $this->column = $column;
         $this->direction = $direction;
+        $this->entity = $entity;
     }
 
     /**
@@ -46,5 +53,13 @@ class SortParameter
     public function getDirection()
     {
         return $this->direction;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEntity()
+    {
+        return $this->entity;
     }
 }
