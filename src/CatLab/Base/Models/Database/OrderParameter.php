@@ -8,8 +8,6 @@ namespace CatLab\Base\Models\Database;
  */
 class OrderParameter implements \CatLab\Base\Interfaces\Database\OrderParameter
 {
-
-
     /**
      * @var string
      */
@@ -21,14 +19,21 @@ class OrderParameter implements \CatLab\Base\Interfaces\Database\OrderParameter
     private $direction;
 
     /**
+     * @var string
+     */
+    private $entity;
+
+    /**
      * SortParameter constructor.
      * @param string $column
      * @param string $direction
+     * @param null $entity
      */
-    public function __construct($column, $direction)
+    public function __construct($column, $direction, $entity = null)
     {
         $this->column = $column;
         $this->direction = $direction;
+        $this->entity = $entity;
     }
 
     /**
@@ -58,6 +63,14 @@ class OrderParameter implements \CatLab\Base\Interfaces\Database\OrderParameter
         } else {
             return self::ASC;
         }
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getEntity()
+    {
+        return $this->entity;
     }
 
     /**
