@@ -20,4 +20,9 @@ interface OrderParameter
      * @return string
      */
     public function getDirection();
+
+    /**
+     * @return string
+     */
+    public function getEntity();
 }
