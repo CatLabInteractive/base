@@ -64,8 +64,8 @@ class StringHelper
      */
     public static function plural($input, $amount = 2)
     {
-        if (method_exists('Str', 'plural')) {
-            return call_user_func([ 'Str', 'plural' ], $input, $amount);
+        if (function_exists('str_plural')) {
+            return call_user_func('str_plural', $input, $amount);
         } else {
             return $input . 's';
         }
