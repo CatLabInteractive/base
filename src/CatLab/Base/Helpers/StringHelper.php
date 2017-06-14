@@ -55,4 +55,19 @@ class StringHelper
     {
         return mb_strtolower($input);
     }
+
+    /**
+     * Return a (not very good) pluralized form of the input.
+     * @param $input
+     * @param int $amount
+     * @return mixed|string
+     */
+    public static function plural($input, $amount = 2)
+    {
+        if (method_exists('Str', 'plural')) {
+            return call_user_func([ 'Str', 'plural' ], $input, $amount);
+        } else {
+            return $input . 's';
+        }
+    }
 }
