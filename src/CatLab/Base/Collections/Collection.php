@@ -196,4 +196,34 @@ class Collection
     {
         return $this->data;
     }
+
+    /**
+     * Filter and return a new collection.
+     * @param callable $filter
+     * @return self
+     */
+    public function filter(callable $filter)
+    {
+        $out = new static();
+
+        $this->each(function($value) use ($filter, $out) {
+            if (call_user_func($filter, $value)) {
+                $out->add($value);
+            }
+        });
+
+        return $out;
+    }
+
+    /**
+     * Filter and return a new collection.
+     * @param callable $filter
+     * @return void
+     */
+    public function each(callable $filter)
+    {
+        foreach ($this->data as $value) {
+            call_user_func($filter, $value);
+        }
+    }
 }
