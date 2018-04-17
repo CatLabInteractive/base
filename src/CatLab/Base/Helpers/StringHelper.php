@@ -70,4 +70,34 @@ class StringHelper
             return $input . 's';
         }
     }
+
+    /**
+     * Check if $input starts with $needle
+     * @param $haystack
+     * @param $needle
+     * @return bool
+     */
+    public static function startsWith($haystack, $needle)
+    {
+        if ($needle === '') {
+            return false;
+        }
+
+        return self::substr($haystack, 0, self::length($needle)) === $needle;
+    }
+
+    /**
+     * Check if $input ends with $needle
+     * @param $haystack
+     * @param $needle
+     * @return bool
+     */
+    public static function endsWith($haystack, $needle)
+    {
+        if ($needle === '') {
+            return false;
+        }
+
+        return self::substr($haystack, -self::length($needle)) === $needle;
+    }
 }
