@@ -3,9 +3,7 @@
 namespace CatLab\Base\Collections;
 
 use ArrayAccess;
-use CatLab\Base\Collections\CollectionIterator;
 use Countable;
-use Iterator;
 use IteratorAggregate;
 use Traversable;
 
@@ -13,18 +11,24 @@ use Traversable;
  * Class Collection
  * @package CatLab\RESTResource\Collections
  */
-class Collection
-    implements IteratorAggregate, ArrayAccess, Countable
+class Collection implements IteratorAggregate, ArrayAccess, Countable
 {
+    /**
+     * @var int
+     */
     private $position = 0;
-    private $data = array ();
 
-    protected function setCollectionValues (array $data)
+    /**
+     * @var array
+     */
+    protected $data = array();
+
+    protected function setCollectionValues(array $data)
     {
         $this->data = $data;
     }
 
-    public function add ($value)
+    public function add($value)
     {
         $this[] = $value;
     }
@@ -108,7 +112,7 @@ class Collection
      */
     public function count()
     {
-        return count ($this->data);
+        return count($this->data);
     }
 
     /**
@@ -117,20 +121,18 @@ class Collection
      */
     public function peek()
     {
-        if (isset ($this->data[$this->position + 1]))
-        {
+        if (isset ($this->data[$this->position + 1])) {
             return $this->data[$this->position + 1];
         }
         return null;
     }
 
-    public function reverse ()
+    /**
+     * Reverse the collection.
+     */
+    public function reverse()
     {
-        $this->data = array_reverse ($this->data);
-    }
-
-    private function isAssociative () {
-        return array_values ($this->data) === $this->data;
+        $this->data = array_reverse($this->data);
     }
 
     /**
@@ -138,14 +140,15 @@ class Collection
      * @param $entry
      * @return bool
      */
-    public function remove ($entry) {
+    public function remove($entry)
+    {
         foreach ($this->data as $k => $v) {
             if ($v === $entry) {
-                $associative = $this->isAssociative ();
+                $associative = $this->isAssociative();
 
                 unset ($this->data[$k]);
                 if ($associative) {
-                    $this->data = array_values ($this->data);
+                    $this->data = array_values($this->data);
                 }
 
                 return true;
@@ -158,7 +161,7 @@ class Collection
     /**
      * Return the very first element.
      */
-    public function first ()
+    public function first()
     {
         if (!is_array($this->data)) return $this->data;
         if (!count($this->data)) return null;
@@ -169,7 +172,7 @@ class Collection
     /**
      * Return the very last element.
      */
-    public function last ()
+    public function last()
     {
         if (!is_array($this->data)) return $this->data;
         if (!count($this->data)) return null;
@@ -206,7 +209,7 @@ class Collection
     {
         $out = new static();
 
-        $this->each(function($value) use ($filter, $out) {
+        $this->each(function ($value) use ($filter, $out) {
             if (call_user_func($filter, $value)) {
                 $out->add($value);
             }
@@ -225,5 +228,18 @@ class Collection
         foreach ($this->data as $value) {
             call_user_func($filter, $value);
         }
+    }
+
+    /**
+     * @param callable $sortFunction
+     */
+    public function sort(callable $sortFunction)
+    {
+        usort($this->data, $sortFunction);
+    }
+
+    protected function isAssociative()
+    {
+        return array_values($this->data) === $this->data;
     }
 }
