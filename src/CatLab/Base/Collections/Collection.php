@@ -232,7 +232,8 @@ class Collection implements IteratorAggregate, ArrayAccess, Countable
 
     /**
      * Execute a function on all members of the collection.
-     * @param callable $filter
+     * @param callable $filter      Filter that will be called on every element in the collection.
+     * @param string $collection    Classname of collection that will be returned.
      * @return Collection
      */
     public function map(
@@ -240,7 +241,7 @@ class Collection implements IteratorAggregate, ArrayAccess, Countable
         $collection = self::class
     ) {
         $out = new $collection();
-        foreach ($out as $k => $v) {
+        foreach ($this as $k => $v) {
             $out[$k] = call_user_func($filter, $v);
         }
 
