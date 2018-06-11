@@ -231,6 +231,23 @@ class Collection implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
+     * Execute a function on all members of the collection.
+     * @param callable $filter
+     * @return Collection
+     */
+    public function map(
+        callable $filter,
+        $collection = self::class
+    ) {
+        $out = new $collection();
+        foreach ($out as $k => $v) {
+            $out[$k] = call_user_func($filter, $v);
+        }
+
+        return $out;
+    }
+
+    /**
      * @param callable $sortFunction
      */
     public function sort(callable $sortFunction)
