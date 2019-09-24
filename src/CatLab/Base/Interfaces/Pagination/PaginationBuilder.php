@@ -22,7 +22,7 @@ interface PaginationBuilder
      * @param string $publicName
      * @return $this
      */
-    public function registerPropertyName(string $column, string $publicName);
+    public function registerPropertyName(string $column, string $publicName, \closure $transformer = null);
 
     /**
      * @param int $records
