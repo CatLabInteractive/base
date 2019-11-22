@@ -27,6 +27,11 @@ class SelectQueryParameters implements SelectQueryParametersInterface
     private $limit;
 
     /**
+     * @var JoinParameter[]
+     */
+    private $joins;
+
+    /**
      * @var bool
      */
     private $reverse = false;
@@ -38,6 +43,8 @@ class SelectQueryParameters implements SelectQueryParametersInterface
     {
         $this->where = array();
         $this->sort = array();
+        $this->joins = array();
+
         $this->limit = null;
         $this->reverse = false;
     }
@@ -49,6 +56,16 @@ class SelectQueryParameters implements SelectQueryParametersInterface
     public function where(WhereParameter $where)
     {
         $this->where[] = $where;
+        return $this;
+    }
+
+    /**
+     * @param JoinParameter $join
+     * @return $this
+     */
+    public function join(JoinParameter $join)
+    {
+        $this->joins[] = $join;
         return $this;
     }
 
@@ -90,6 +107,14 @@ class SelectQueryParameters implements SelectQueryParametersInterface
     }
 
     /**
+     * @return JoinParameter[]
+     */
+    public function getJoins()
+    {
+        return $this->joins;
+    }
+
+    /**
      * @return OrderParameter[]
      */
     public function getSort()
@@ -127,10 +152,67 @@ class SelectQueryParameters implements SelectQueryParametersInterface
 
         $query = "SELECT " . implode($columns, ',') . " FROM " . $table;
 
+        $joins = '';
+        foreach ($this->getJoins() as $v) {
+            $joins .= $v->toQuery($pdo);
+        }
+
+        if (mb_strlen($joins) > 0) {
+            $query .= $joins . ' ';
+        }
+
         $where = '';
         foreach ($this->getWhere() as $v) {
             $where .= $v->toQuery($pdo) . ' AND ';
         }
+
+        if (mb_strlen($where) > 0) {
+            $where = mb_substr($where, 0, -5);
+            $query .= ' WHERE ' . $where;
+        }
+
+        if (count($this->getSort()) > 0) {
+            $query .= ' ORDER BY ';
+            foreach ($this->getSort() as $v) {
+                $query .= $v->__toString() . ', ';
+            }
+            $query = mb_substr($query, 0, -2);
+        }
+
+        if ($this->getLimit()) {
+            $query .= ' LIMIT ' . $this->getLimit()->getAmount();
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param $table
+     * @param array $columns
+     * @return string
+     */
+    public function toSql($table = 'table', $columns = [])
+    {
+        if (count($columns) === 0) {
+            $columns = [ '*' ];
+        }
+
+        $query = "SELECT " . implode($columns, ',') . " FROM " . $table;
+
+        $joins = '';
+        foreach ($this->getJoins() as $v) {
+            $joins .= $v->__toString();
+        }
+
+        if (mb_strlen($joins) > 0) {
+            $query .= $joins . ' ';
+        }
+
+        $where = '';
+        foreach ($this->getWhere() as $v) {
+            $where .= $v->__toString() . ' AND ';
+        }
+
         if (mb_strlen($where) > 0) {
             $where = mb_substr($where, 0, -5);
             $query .= ' WHERE ' . $where;

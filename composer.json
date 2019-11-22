@@ -12,10 +12,12 @@
   "require-dev": {
     "phpunit/phpunit": "5.3.*"
   },
-  "require": {},
+  "require": {
+    "ext-mbstring": "*"
+  },
   "autoload": {
     "psr-4": {
-      "CatLab\\Base\\": "src/CatLab/Base"
+      "CatLab\\Base\\": "src/"
     }
   }
 }

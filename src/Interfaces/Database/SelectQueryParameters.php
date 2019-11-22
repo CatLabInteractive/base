@@ -9,6 +9,11 @@ namespace CatLab\Base\Interfaces\Database;
 interface SelectQueryParameters
 {
     /**
+     * @return JoinParameter[]
+     */
+    public function getJoins();
+
+    /**
      * @return WhereParameter[]
      */
     public function getWhere();

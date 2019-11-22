@@ -18,33 +18,39 @@ class WhereParameter implements WhereParameterInterface
     /**
      * @var Comparison
      */
-    private $condition;
+    protected $condition;
 
     /**
      * @var Conjunction[]
      */
-    private $compositions;
+    protected $compositions;
 
     /**
      * @var string
      */
-    private $subject;
+    protected $type = WhereParameterInterface::TYPE_BASIC;
 
     /**
      * WhereParameter constructor.
      * @param $column
      * @param $operator
      * @param $value
-     * @param $entity
+     * @param bool $raw
      */
-    public function __construct($column = null, $operator = null, $value = null, $entity = null)
+    public function __construct($column = null, $operator = null, $value = null, $raw = false)
     {
+        // depecrated, column should be array and raw should be boolean.
+        if (!is_array($column) && is_string($raw)) {
+            $column = [ $raw, $column ];
+            $raw = false;
+        }
+
         $this->compositions = [];
 
         if ($column instanceof WhereParameterInterface) {
             $this->and($column);
         } elseif (isset($column) || isset($operator)) {
-            $this->condition = new Comparison($column, $operator, $value, $entity);
+            $this->condition = new Comparison($column, $operator, $value, $raw);
         }
     }
 
