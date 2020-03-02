@@ -33,18 +33,24 @@ class Comparison implements Condition, ComparisonInterface
     protected $raw = false;
 
     /**
+     * @var any
+     */
+    protected $entity;
+
+    /**
      * WhereParameter constructor.
      * @param $column string|array
      * @param $operator
      * @param $value
      * @param $raw
      */
-    public function __construct($column, $operator, $value, $raw = false)
+    public function __construct($column, $operator, $value, $raw = false, $entity = null)
     {
         $this->subject = $column;
         $this->operator = $operator;
         $this->value = $value;
         $this->raw = $raw;
+        $this->entity = $entity;
     }
 
     /**

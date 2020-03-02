@@ -36,8 +36,9 @@ class WhereParameter implements WhereParameterInterface
      * @param $operator
      * @param $value
      * @param bool $raw
+     * @param null $entity
      */
-    public function __construct($column = null, $operator = null, $value = null, $raw = false)
+    public function __construct($column = null, $operator = null, $value = null, $raw = false, $entity = null)
     {
         // depecrated, column should be array and raw should be boolean.
         if (!is_array($column) && is_string($raw)) {
@@ -50,7 +51,7 @@ class WhereParameter implements WhereParameterInterface
         if ($column instanceof WhereParameterInterface) {
             $this->and($column);
         } elseif (isset($column) || isset($operator)) {
-            $this->condition = new Comparison($column, $operator, $value, $raw);
+            $this->condition = new Comparison($column, $operator, $value, $raw, $entity);
         }
     }
 
