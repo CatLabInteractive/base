@@ -53,11 +53,20 @@ interface PaginationBuilder
     public function getOrderBy();
 
     /**
+     * Process results and return the resulting collection.
      * @param SelectQueryParameters $parameters
      * @param mixed[] $collection
      * @return mixed[]
      */
     public function processResults(SelectQueryParameters $parameters, $collection);
+
+    /**
+     * Process an already processed result set.
+     * This should set any cursors / first / last values that the pagination builder needs.
+     * @param $results
+     * @return mixed
+     */
+    public function processCollection($results);
 
     /**
      * @param array $properties
