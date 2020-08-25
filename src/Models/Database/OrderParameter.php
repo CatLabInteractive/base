@@ -19,7 +19,7 @@ class OrderParameter implements \CatLab\Base\Interfaces\Database\OrderParameter
     private $direction;
 
     /**
-     * @var string
+     * @var mixed
      */
     private $entity;
 

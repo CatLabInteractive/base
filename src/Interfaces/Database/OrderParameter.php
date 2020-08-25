@@ -22,7 +22,7 @@ interface OrderParameter
     public function getDirection();
 
     /**
-     * @return string
+     * @return mixed|null
      */
     public function getEntity();
 }
