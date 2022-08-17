@@ -150,7 +150,7 @@ class SelectQueryParameters implements SelectQueryParametersInterface
             $columns = [ '*' ];
         }
 
-        $query = "SELECT " . implode($columns, ',') . " FROM " . $table;
+        $query = "SELECT " . implode(',', $columns) . " FROM " . $table;
 
         $joins = '';
         foreach ($this->getJoins() as $v) {
@@ -197,7 +197,7 @@ class SelectQueryParameters implements SelectQueryParametersInterface
             $columns = [ '*' ];
         }
 
-        $query = "SELECT " . implode($columns, ',') . " FROM " . $table;
+        $query = "SELECT " . implode(',', $columns) . " FROM " . $table;
 
         $joins = '';
         foreach ($this->getJoins() as $v) {
